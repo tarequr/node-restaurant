@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 // routes GET | POST | PUT | DELETE
-router.get('/', testUserController);
+router.get('/test-user', testUserController);
 
 // Export
 module.exports = router
