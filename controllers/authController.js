@@ -1,5 +1,6 @@
 const userModel = require("../models/userModel");
-var bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
+const JWT = require('jsonwebtoken');
 
 /* REGISTER CONTROLLER */
 const registerController = async(req, res) => {
@@ -60,19 +61,37 @@ const loginController = async(req, res) => {
         }
 
         /** Check User **/
-        const user = await userModel.findOne({ email: email, password: password });
+        const user = await userModel.findOne({email});
         if (!user) {
             return res.status(404).send({ 
                 success: false,
-                message: 'User not found or password is incorrect'
+                message: 'User Not Found'
             });
         }
+
+        /** Check User Password | Compare Password  **/
+        const isMatch = await bcrypt.compare(password, user.password)
+        if (!isMatch) {
+            return res.status(500).send({ 
+                success: false,
+                message: 'Invalid Credentials'
+            });
+        }
+
+        user.password = undefined;
+
+        /** Token **/
+        const token = JWT.sign({ id: user._id }, process.env.JWT_SECRET, {
+            expiresIn: "7d",
+        });
 
         res.status(200).send({
             success: true,
             message: 'User login successfully',
+            token,
             user
         });
+
     } catch (error) {
         console.log(error);
         res.status(500).send({
