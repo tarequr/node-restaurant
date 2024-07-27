@@ -1,4 +1,5 @@
 const userModel = require("../models/userModel");
+var bcrypt = require('bcryptjs');
 
 /* REGISTER CONTROLLER */
 const registerController = async(req, res) => {
@@ -22,8 +23,12 @@ const registerController = async(req, res) => {
             });
         }
 
+        /** Hashing password **/
+        let salt = bcrypt.genSaltSync(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
         /** Create new user **/
-        const user = await userModel.create({ name, email, password, phone, address });
+        const user = await userModel.create({ name, email, password: hashedPassword, phone, address });
         res.status(201).send({
             success: true,
             message: 'User created successfully',
