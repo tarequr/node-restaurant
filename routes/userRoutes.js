@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUserController, updateUserController } = require('../controllers/userController');
+const { getUserController, updateUserController, updatePasswordController } = require('../controllers/userController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 
@@ -11,7 +11,9 @@ const router = express.Router();
 router.get('/getUser', authMiddleware, getUserController);
 
 /* UPDATE PROFILE || PUT */
-router.put('/udateUser', authMiddleware, updateUserController);
+router.put('/updateUser', authMiddleware, updateUserController);
 
+/* PASSWORD CHANGE || POST */
+router.post('/updatePassword', authMiddleware, updatePasswordController);
 // Export
 module.exports = router
