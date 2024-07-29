@@ -39,7 +39,7 @@ const getUserController = async(req, res) => {
 const updateUserController = async(req, res) => {
     try {
         /* Find User */
-        const user = await userModel.findById({ _id:req.body.id }, { _id:0 });
+        const user = await userModel.findById({ _id:req.body.id });
 
         /* Validation */
         if (!user) {
@@ -50,13 +50,15 @@ const updateUserController = async(req, res) => {
         }
 
         /* Update */
-        const { name, address, phone } = res.body
+        const { name, address, phone } = req.body
 
         if (name) user.name = name;
         if (address) user.address = address;
         if (phone) user.phone = phone;
         await user.save();
 
+        user.password = undefined;
+        
         res.status(200).send({
             success: true,
             message: 'User update successfully',
