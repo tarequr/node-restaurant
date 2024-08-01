@@ -1,13 +1,16 @@
 const express = require('express');
 const authMiddleware = require('../middlewares/authMiddleware');
-const { createResturantController } = require('../controllers/restaurantController');
+const { createRestaurantController, getAllRestaurantController } = require('../controllers/restaurantController');
 
 const router = express.Router();
 
 //routes
 
-/* CREATE RESTURANT || POST */
-router.post('/create', authMiddleware, createResturantController);
+/* CREATE RESTAURANT || POST */
+router.post('/create', authMiddleware, createRestaurantController);
+
+/* GET ALL RESTAURANTS || GET */
+router.get('/getAll', authMiddleware, getAllRestaurantController);
 
 // Export
 module.exports = router
