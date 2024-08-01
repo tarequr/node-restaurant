@@ -1,6 +1,6 @@
 const express = require('express');
 const authMiddleware = require('../middlewares/authMiddleware');
-const { createRestaurantController, getAllRestaurantController } = require('../controllers/restaurantController');
+const { createRestaurantController, getAllRestaurantController, getRestaurantByIdController } = require('../controllers/restaurantController');
 
 const router = express.Router();
 
@@ -11,6 +11,9 @@ router.post('/create', authMiddleware, createRestaurantController);
 
 /* GET ALL RESTAURANTS || GET */
 router.get('/getAll', authMiddleware, getAllRestaurantController);
+
+/* GET ALL RESTAURANT BY ID || GET */
+router.get('/get/:id', authMiddleware, getRestaurantByIdController);
 
 // Export
 module.exports = router
