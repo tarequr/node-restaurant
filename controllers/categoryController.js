@@ -89,4 +89,32 @@ const updateCategoryController = async(req, res) => {
     }
 }
 
-module.exports = { createCategoryController, getAllCategoryController, updateCategoryController }
+/* DELETE CATEGORY CONTROLLER */
+const deleteCategoryController = async(req, res) => {
+    try {
+        if (!req.params.id) {
+            return res.status(404).send({ 
+                success: false,
+                message: 'Please provide restaurant id.'
+            }); 
+        }
+
+        await categoryModel.findByIdAndDelete(req.params.id);
+        
+        res.status(200).send({
+            success: true,
+            message: 'Category deleted successfully'
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: `Error In Delete Categories API: ${error.message}`,
+            error
+        });
+    }
+}
+
+
+module.exports = { createCategoryController, getAllCategoryController, updateCategoryController, deleteCategoryController }
