@@ -25,10 +25,37 @@ const createCategoryController = async(req, res) => {
         console.log(error);
         res.status(500).send({
             success: false,
-            message: `Error In Delete Restaurant API: ${error.message}`,
+            message: `Error In Create Category API: ${error.message}`,
             error
         });
     }
 }
 
-module.exports = { createCategoryController }
+/* CREATE CATEGORY CONTROLLER */
+const getAllCategoryController = async(req, res) => {
+    try {
+        const categories = await categoryModel.find({});
+
+        if (!categories) {
+            return res.status(404).send({ 
+                success: false,
+                message: 'No category available'
+            });
+        }
+
+        res.status(200).send({
+            success: true,
+            totalCount: categories.length,
+            categories
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: `Error In Get All Categories API: ${error.message}`,
+            error
+        });
+    }
+}
+
+module.exports = { createCategoryController, getAllCategoryController }
