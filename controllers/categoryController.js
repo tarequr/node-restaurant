@@ -58,4 +58,35 @@ const getAllCategoryController = async(req, res) => {
     }
 }
 
-module.exports = { createCategoryController, getAllCategoryController }
+/* UPDATE CATEGORY CONTROLLER */
+const updateCategoryController = async(req, res) => {
+    try {
+        const { id } = req.params;
+        const { title, imageUrl } = req.body;
+
+        const updateCategory = await categoryModel.findByIdAndUpdate(id, { title, imageUrl }, { new: true });
+       
+        if (!updateCategory) {
+            return res.status(500).send({ 
+                success: false,
+                message: 'No category available'
+            });
+        }
+
+        res.status(200).send({
+            success: true,
+            message: 'Category updated successfully',
+            updateCategory
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: `Error In Update Categories API: ${error.message}`,
+            error
+        });
+    }
+}
+
+module.exports = { createCategoryController, getAllCategoryController, updateCategoryController }
