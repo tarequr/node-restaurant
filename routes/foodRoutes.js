@@ -1,6 +1,6 @@
 const express = require('express');
 const authMiddleware = require('../middlewares/authMiddleware');
-const { createFoodController, getAllFoodController, getSingleFoodController } = require('../controllers/foodController');
+const { createFoodController, getAllFoodController, getSingleFoodController, getByRestaurantController } = require('../controllers/foodController');
 
 
 const router = express.Router();
@@ -13,6 +13,9 @@ router.get('/getAll', getAllFoodController);
 
 /* GET SINGLE FOOD || GET */
 router.get('/get/:id', getSingleFoodController);
+
+/* GET SINGLE FOOD || GET */
+router.get('/getByRestaurant/:id', getByRestaurantController);
 
 // /* UPDATE FOOD || PUT */
 // router.put('/update/:id', authMiddleware, updateCategoryController);
