@@ -31,7 +31,7 @@ const createCategoryController = async(req, res) => {
     }
 }
 
-/* CREATE CATEGORY CONTROLLER */
+/* GET ALL CATEGORY CONTROLLER */
 const getAllCategoryController = async(req, res) => {
     try {
         const categories = await categoryModel.find({});

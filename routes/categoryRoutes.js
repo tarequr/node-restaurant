@@ -10,10 +10,10 @@ router. post('/create', authMiddleware, createCategoryController);
 /* GET ALL CATEGORIES || GET */
 router.get('/getAll', getAllCategoryController);
 
-/* UPDATE CATEGORIES || PUT */
+/* UPDATE CATEGORY || PUT */
 router.put('/update/:id', authMiddleware, updateCategoryController);
 
-/* DELETE USER || DELETE */
+/* DELETE CATEGORY || DELETE */
 router.delete('/delete/:id', authMiddleware, deleteCategoryController);
 
 // Export

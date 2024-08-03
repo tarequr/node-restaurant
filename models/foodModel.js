@@ -47,4 +47,4 @@ const foodSchema = new mongoose.Schema({
 },{timestamps: true});
 
 // Export
-module.exports = mongoose.model('Category', foodSchema);
+module.exports = mongoose.model('Food', foodSchema);
