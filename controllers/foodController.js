@@ -58,6 +58,38 @@ const getAllFoodController = async(req, res) => {
     }
 }
 
+/* GET SINGLE FOOD CONTROLLER */
+const getSingleFoodController = async(req, res) => {
+    try {
+        if (!req.params.id) {
+            return res.status(404).send({ 
+                success: false,
+                message: 'Please provide food id.'
+            }); 
+        }
+
+        const food = await foodModel.findById(req.params.id);
+        if (!food) {
+            return res.status(404).send({ 
+                success: false,
+                message: 'No food available'
+            });
+        }
+
+        res.status(200).send({
+            success: true,
+            food
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: `Error In Get Single Food API: ${error.message}`,
+            error
+        });
+    }
+}
+
 // /* UPDATE CATEGORY CONTROLLER */
 // const updateCategoryController = async(req, res) => {
 //     try {
@@ -117,4 +149,4 @@ const getAllFoodController = async(req, res) => {
 // }
 
 
-module.exports = { createFoodController, getAllFoodController }
+module.exports = { createFoodController, getAllFoodController, getSingleFoodController }
