@@ -31,32 +31,32 @@ const createFoodController = async(req, res) => {
     }
 }
 
-// /* CREATE CATEGORY CONTROLLER */
-// const getAllCategoryController = async(req, res) => {
-//     try {
-//         const categories = await categoryModel.find({});
+/* GET ALL FOODS CONTROLLER */
+const getAllFoodController = async(req, res) => {
+    try {
+        const foods = await foodModel.find({});
 
-//         if (!categories) {
-//             return res.status(404).send({ 
-//                 success: false,
-//                 message: 'No category available'
-//             });
-//         }
+        if (!foods) {
+            return res.status(404).send({ 
+                success: false,
+                message: 'No food available'
+            });
+        }
 
-//         res.status(200).send({
-//             success: true,
-//             totalCount: categories.length,
-//             categories
-//         });
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).send({
-//             success: false,
-//             message: `Error In Get All Categories API: ${error.message}`,
-//             error
-//         });
-//     }
-// }
+        res.status(200).send({
+            success: true,
+            totalCount: foods.length,
+            foods
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: `Error In Get All Foods API: ${error.message}`,
+            error
+        });
+    }
+}
 
 // /* UPDATE CATEGORY CONTROLLER */
 // const updateCategoryController = async(req, res) => {
@@ -117,4 +117,4 @@ const createFoodController = async(req, res) => {
 // }
 
 
-module.exports = { createFoodController }
+module.exports = { createFoodController, getAllFoodController }
