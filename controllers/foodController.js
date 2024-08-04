@@ -124,36 +124,44 @@ const getByRestaurantController = async(req, res) => {
     }
 }
 
-// /* UPDATE CATEGORY CONTROLLER */
-// const updateCategoryController = async(req, res) => {
-//     try {
-//         const { id } = req.params;
-//         const { title, imageUrl } = req.body;
+/* UPDATE FOOD CONTROLLER */
+const updateFoodController = async(req, res) => {
+    try {
+        const { id } = req.params;
+        if (!id) {
+            return res.status(404).send({ 
+                success: false,
+                message: 'Please provide food id.'
+            }); 
+        }
 
-//         const updateCategory = await categoryModel.findByIdAndUpdate(id, { title, imageUrl }, { new: true });
-       
-//         if (!updateCategory) {
-//             return res.status(500).send({ 
-//                 success: false,
-//                 message: 'No category available'
-//             });
-//         }
+        const food = await foodModel.findById(id);
+        if (!food) {
+            return res.status(500).send({ 
+                success: false,
+                message: 'No food available'
+            });
+        }
 
-//         res.status(200).send({
-//             success: true,
-//             message: 'Category updated successfully',
-//             updateCategory
-//         });
+        const { title, description, price, imageUrl, foodTags, category, code, isAvailable, restaurant, rating } = req.body;
+        
+        const updateFood = await foodModel.findByIdAndUpdate(id, { title, description, price, imageUrl, foodTags, category, code, isAvailable, restaurant, rating }, { new: true });
+        
+        res.status(200).send({
+            success: true,
+            message: 'Food updated successfully',
+            updateFood
+        });
 
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).send({
-//             success: false,
-//             message: `Error In Update Categories API: ${error.message}`,
-//             error
-//         });
-//     }
-// }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: `Error In Update Food API: ${error.message}`,
+            error
+        });
+    }
+}
 
 // /* DELETE CATEGORY CONTROLLER */
 // const deleteCategoryController = async(req, res) => {
@@ -183,4 +191,4 @@ const getByRestaurantController = async(req, res) => {
 // }
 
 
-module.exports = { createFoodController, getAllFoodController, getSingleFoodController, getByRestaurantController }
+module.exports = { createFoodController, getAllFoodController, getSingleFoodController, getByRestaurantController, updateFoodController }
