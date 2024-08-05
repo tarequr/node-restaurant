@@ -190,5 +190,18 @@ const deleteFoodController = async(req, res) => {
     }
 }
 
+/* PLACE ORDER CONTROLLER */
+const placeOrderController = async(req, res) => {
+    try {
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: `Error In Place Order API: ${error.message}`,
+            error
+        });
+    }
+}
 
-module.exports = { createFoodController, getAllFoodController, getSingleFoodController, getByRestaurantController, updateFoodController, deleteFoodController }
+module.exports = { createFoodController, getAllFoodController, getSingleFoodController, getByRestaurantController, updateFoodController, deleteFoodController, placeOrderController }
