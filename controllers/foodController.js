@@ -217,7 +217,7 @@ const placeOrderController = async(req, res) => {
         });
 
         await newOder.save();
-        
+
         return res.status(201).send({ 
             success: true,
             message: 'Order placed successfully.',
@@ -233,4 +233,33 @@ const placeOrderController = async(req, res) => {
     }
 }
 
-module.exports = { createFoodController, getAllFoodController, getSingleFoodController, getByRestaurantController, updateFoodController, deleteFoodController, placeOrderController }
+/* ORDER STATUS CONTROLLER */
+const orderStatusController = async(req, res) => {
+    try {
+        const orderId = req.params.id;
+        
+        if (!orderId) {
+            return res.status(404).send({ 
+                success: false,
+                message: 'Please provide order id.'
+            }); 
+        }
+
+        const { status } = req.body;
+        const order = await orderModel.findByIdAndUpdate(orderId, { status }, { new: true });
+        res.status(200).send({ 
+            success: true,
+            message: 'Order Status Updated.',
+            order
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: `Error In Order Status API: ${error.message}`,
+            error
+        });
+    }
+}
+
+module.exports = { createFoodController, getAllFoodController, getSingleFoodController, getByRestaurantController, updateFoodController, deleteFoodController, placeOrderController, orderStatusController }

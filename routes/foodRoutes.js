@@ -1,6 +1,7 @@
 const express = require('express');
 const authMiddleware = require('../middlewares/authMiddleware');
-const { createFoodController, getAllFoodController, getSingleFoodController, getByRestaurantController, updateFoodController, deleteFoodController, placeOrderController } = require('../controllers/foodController');
+const adminMiddleware = require('../middlewares/adminMiddleware');
+const { createFoodController, getAllFoodController, getSingleFoodController, getByRestaurantController, updateFoodController, deleteFoodController, placeOrderController, orderStatusController } = require('../controllers/foodController');
 
 
 const router = express.Router();
@@ -25,6 +26,9 @@ router.delete('/delete/:id', authMiddleware, deleteFoodController);
 
 /* PLACEORDER || DELETE */
 router.post('/placeorder', authMiddleware, placeOrderController);
+
+/* ORDER STATUS || POST */
+router.post('/orderStatus/:id', authMiddleware, adminMiddleware, orderStatusController);
 
 // Export
 module.exports = router
