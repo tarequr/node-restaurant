@@ -216,6 +216,8 @@ const placeOrderController = async(req, res) => {
             buyer: req.body.id
         });
 
+        await newOder.save();
+        
         return res.status(201).send({ 
             success: true,
             message: 'Order placed successfully.',
