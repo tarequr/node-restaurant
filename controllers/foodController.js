@@ -1,4 +1,5 @@
 const foodModel = require("../models/foodModel");
+const orderModel = require("../models/orderModel");
 
 /* CREATE FOOD CONTROLLER */
 const createFoodController = async(req, res) => {
@@ -193,7 +194,33 @@ const deleteFoodController = async(req, res) => {
 /* PLACE ORDER CONTROLLER */
 const placeOrderController = async(req, res) => {
     try {
-        
+        const { cart } = req.body;
+
+        if (!cart) {
+            return res.status(500).send({ 
+                success: false,
+                message: 'Please provide food cart.'
+            }); 
+        }
+
+        let total = 0;
+
+        //calculation
+        cart.map((item) => {
+            total += item.price;
+        });
+
+        const newOder = new orderModel({
+            foods: cart,
+            payment: total,
+            buyer: req.body.id
+        });
+
+        return res.status(201).send({ 
+            success: true,
+            message: 'Order placed successfully.',
+            newOder
+        });
     } catch (error) {
         console.log(error);
         res.status(500).send({
